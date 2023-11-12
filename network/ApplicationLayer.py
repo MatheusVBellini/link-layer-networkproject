@@ -1,3 +1,5 @@
+from . import time
+
 # mock client for proof of concept
 class Client:
 
@@ -8,22 +10,22 @@ class Client:
     
     # set a message to be sent
     def setMessage(self):
-        print('>> Client initialized')
+        print(f'>> {time()} Client initialized')
         self.message = input('>> Type your message here: ')
         print('>>')
 
     # Attempt to connect to server
     def connect(self, server):
         if self.server != 0:
-            print('>> Client already connected to this or another server')
-            print('>> Connection could not be completed\n>>')
+            print(f'>> {time()} Client already connected to this or another server')
+            print(f'>> {time()} Connection could not be completed\n>>')
             return False
         if server.connect(self):
             self.server = server
-            print('>> Client connected to server\n>>')
+            print(f'>> {time()} Client connected to server\n>>')
             return True
-        print('>> Server is busy')
-        print('>> Connection could not be completed\n>>')
+        print(f'>> {time()} Server is busy')
+        print(f'>> {time()} Connection could not be completed\n>>')
         return False
 
 # mock server for proof of concept
