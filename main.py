@@ -12,4 +12,8 @@ def main():
     client.connect(server) # works and connects both
     blocked_client.connect(server) # fails and does not connect
 
+    # sending
+    blocked_client.send() # fails
+    client.send() # works
+
 main()

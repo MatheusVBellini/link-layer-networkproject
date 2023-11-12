@@ -1,4 +1,5 @@
-from . import time
+from . import time, cstr
+import network.TransportLayer as tl
 
 # mock client for proof of concept
 class Client:
@@ -10,6 +11,7 @@ class Client:
     
     # set a message to be sent
     def setMessage(self):
+        print(f'>> {cstr("APPLICATION LAYER","cyan")}')
         print(f'>> {time()} Client initialized')
         self.message = input('>> Type your message here: ')
         print('>>')
@@ -27,6 +29,13 @@ class Client:
         print(f'>> {time()} Server is busy')
         print(f'>> {time()} Connection could not be completed\n>>')
         return False
+    
+    # send message to server
+    def send(self):
+        if self.server == 0:
+            print(f'>> {time()} Client is not connected to a server\n>>')
+            return
+        tl.tcpSend(self.message, self, self.server)
 
 # mock server for proof of concept
 class Server:
