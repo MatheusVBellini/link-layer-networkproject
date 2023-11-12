@@ -8,10 +8,11 @@ class Client:
     def __init__(self):
         self.message = ''
         self.server = 0
+        self.ipv4 = '192.168.0.1'
     
     # set a message to be sent
     def setMessage(self):
-        print(f'>> {cstr("APPLICATION LAYER","cyan")}')
+        print(f'>>\n>> {cstr("APPLICATION LAYER","cyan")}')
         print(f'>> {time()} Client initialized')
         self.message = input('>> Type your message here: ')
         print('>>')
@@ -44,6 +45,7 @@ class Server:
     def __init__(self):
         self.message = 'NO_MESSAGE_RECEIVED'
         self.client = 0
+        self.ipv4 = '189.46.2.121'
 
     # accept or deny client request to connect
     def connect(self, client):

@@ -9,10 +9,12 @@ CYAN = "\033[36m"
 WHITE = "\033[37m"   
 RESET = "\033[0m"    
 
+# Returns the current time in the format [HH:MM:SS]
 def time():
     return f'{YELLOW}[{datetime.now().strftime("%H:%M:%S")}]{RESET}'
 
-def cstr(str,color="white"):
+# Returns the string {str} in the color {color}
+def cstr(str,color="reset"):
     colors = {
         "RED": RED,
         "GREEN": GREEN,
