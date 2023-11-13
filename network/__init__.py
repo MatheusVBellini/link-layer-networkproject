@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import sleep
 
 RED = "\033[31m"    
 GREEN = "\033[32m"   
@@ -29,3 +30,8 @@ def cstr(str,color="reset"):
     color_code = colors.get(color.upper(), WHITE)
 
     return f'{color_code}{str}{RESET}'
+
+# Timed print for simulation purposes
+def tprint(msg, delay=1):
+    print(msg)
+    sleep(delay)

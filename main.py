@@ -16,4 +16,5 @@ def main():
     blocked_client.send() # fails
     client.send() # works
 
-main()
+if __name__ == '__main__':
+    main()
