@@ -1,6 +1,7 @@
 from . import time, cstr
 import network.TransportLayer as tl
 
+
 # mock client for proof of concept
 class Client:
 
@@ -9,10 +10,10 @@ class Client:
         self.message = ''
         self.server = 0
         self.ipv4 = '192.168.0.1'
-    
+
     # set a message to be sent
-    def setMessage(self):
-        print(f'>>\n>> {cstr("APPLICATION LAYER","cyan")}')
+    def set_message(self):
+        print(f'>>\n>> {cstr("APPLICATION LAYER", "cyan")}')
         print(f'>> {time()} Client initialized')
         self.message = input('>> Type your message here: ')
         print('>>')
@@ -30,13 +31,14 @@ class Client:
         print(f'>> {time()} Server is busy')
         print(f'>> {time()} Connection could not be completed\n>>')
         return False
-    
+
     # send message to server
     def send(self):
         if self.server == 0:
-            print(f'>> {time()} Client is not connected to a server\n>>')
+            print(f'>> {time()} Client is not connected to a server')
             return
-        tl.tcpSend(self.message, self, self.server)
+        tl.tcp_send(self.message, self, self.server)
+
 
 # mock server for proof of concept
 class Server:
@@ -50,8 +52,6 @@ class Server:
     # accept or deny client request to connect
     def connect(self, client):
         if self.client == 0:
-            self.free = False
             self.client = client
             return True
         return False
-            
