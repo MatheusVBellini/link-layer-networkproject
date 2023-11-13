@@ -13,10 +13,9 @@ def frame_packet(packet, source, destination):
     print(f'>> {time()} Framing packet')
 
     bin_packet = packet.encode('utf-8')  # get packet bits
-
     uint_crc = crc_calc(bin_packet)  # get crc of the packet
     bin_crc = uint_crc.to_bytes(length=4, byteorder='big', signed=False)  # byte representation of the crc
-    algorithm = 'flagbytes'
+    algorithm = 'flagbytes'  # define the framing algorithm to be Flag Bytes
 
     print(f'>> {time()} Packet (utf-8/bits): {cstr(packet, "green")} / {cstr(bytes_to_bits(bin_packet), "green")}')
     print(f'>> {time()} Calculated CRC-32 (uint/bits): {cstr(uint_crc, "green")} / {cstr(bytes_to_bits(bin_crc), "green")}')
@@ -42,6 +41,11 @@ def crc_calc(packet):
 def frame(packet, algorithm='flagbytes'):
     if algorithm == 'flagbytes':
         return flagbytes(packet)
+
+
+# calculate the odd parity bit of a byte stream
+def odd_parity(packet):
+    return (len(list(filter(lambda x: x == 1, packet))) % 2).to_bytes(length=1, byteorder='big', signed=False)
 
 
 ### framing algorithms ###
