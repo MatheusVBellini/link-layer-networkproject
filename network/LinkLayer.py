@@ -12,6 +12,7 @@ def frame_packet(packet, source, destination):
     print(f'>> {time()} Framing packet from {cstr(source.ipv4, "green")} to {cstr(destination.ipv4, "green")}')
 
     bin_packet = packet.encode('utf-8')  # get packet bits
+
     uint_crc = crc_calc(bin_packet)  # get crc of the packet
     bin_crc = uint_crc.to_bytes(length=4, byteorder='big', signed=False)  # byte representation of the crc
 
