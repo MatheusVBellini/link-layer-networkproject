@@ -26,6 +26,13 @@ def frame_packet(packet, source, destination):
     return framed_packet, source, destination
 
 
+# process received framed data (unframing and error detection)
+def unpack_packet(packet, source, destination):
+    print(f'>>\n>> {cstr("LINK LAYER - SERVER", "cyan")}')
+    print(f'>> {time()} unframing packet')
+    print(f'>> {time()} detecting errors')
+    return packet, source, destination
+
 # transform a string into a stream of bits
 def bytes_to_bits(bin_data):
     return ''.join(f'{byte:08b}' for byte in bin_data)

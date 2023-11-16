@@ -46,6 +46,7 @@ class Client:
         data = nl.route_packet(data[0], data[1], data[2])
         data = ll.frame_packet(data[0], data[1], data[2])
         data = pl.transport_packet(data[0], data[1], data[2])
+        self.server.receive(data)
 
 
 # mock server for proof of concept
@@ -63,3 +64,7 @@ class Server:
             self.client = client
             return True
         return False
+
+    # receive data from client and proceed operation
+    def receive(self, data):
+        ll.unpack_packet(data[0], data[1], data[2])

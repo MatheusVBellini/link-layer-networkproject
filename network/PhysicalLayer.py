@@ -5,3 +5,7 @@ from . import time, cstr
 def transport_packet(packet, source, destination):
     print(f'>>\n>> {cstr("PHYSICAL LAYER", "cyan")}')
     print(f'>> {time()} Moving packet from one point to another...')
+
+    # IMPLEMENT: stochastic error generation
+
+    return packet, source, destination
