@@ -1,7 +1,6 @@
 from collections import namedtuple
 from binascii import crc32
 from . import time, cstr
-import network.PhysicalLayer as pl
 
 # framed packet structure
 framedPacket = namedtuple('framedPacket', ['content'])
@@ -24,7 +23,7 @@ def frame_packet(packet, source, destination):
     framed_packet = frame(bin_crc + bin_packet)
 
     print(f'>> {time()} Framed packet: {cstr(bytes_to_bits(framed_packet), "green")}')
-    pl.transport_packet(framed_packet, source, destination)
+    return framed_packet, source, destination
 
 
 # transform a string into a stream of bits

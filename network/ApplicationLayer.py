@@ -1,5 +1,8 @@
 from . import time, cstr
 import network.TransportLayer as tl
+import network.NetworkLayer as nl
+import network.LinkLayer as ll
+import network.PhysicalLayer as pl
 
 
 # mock client for proof of concept
@@ -37,7 +40,12 @@ class Client:
         if self.server == 0:
             print(f'>> {time()} Client is not connected to a server')
             return
-        tl.tcp_send(self.message, self, self.server)
+
+        data = (self.message, self, self.server)
+        data = tl.tcp_send(data[0], data[1], data[2])
+        data = nl.route_packet(data[0], data[1], data[2])
+        data = ll.frame_packet(data[0], data[1], data[2])
+        data = pl.transport_packet(data[0], data[1], data[2])
 
 
 # mock server for proof of concept
