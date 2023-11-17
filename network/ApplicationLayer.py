@@ -67,4 +67,4 @@ class Server:
 
     # receive data from client and proceed operation
     def receive(self, data):
-        ll.unpack_packet(data[0], data[1], data[2])
+        data = ll.unpack_packet(data[0], data[1], data[2])
