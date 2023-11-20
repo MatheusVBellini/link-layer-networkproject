@@ -11,7 +11,7 @@ class Client:
     # constructor
     def __init__(self):
         self.message = ''
-        self.server = 0
+        self.server = None
         self.ipv4 = '192.168.0.1'
 
     # set a message to be sent
@@ -23,7 +23,7 @@ class Client:
 
     # Attempt to connect to server
     def connect(self, server):
-        if self.server != 0:
+        if self.server is not None:
             print(f'>> {time()} Client already connected to this or another server')
             print(f'>> {time()} Connection could not be completed\n>>')
             return False
@@ -37,7 +37,7 @@ class Client:
 
     # send message to server
     def send(self):
-        if self.server == 0:
+        if self.server is None:
             print(f'>> {time()} Client is not connected to a server')
             return
 
@@ -54,13 +54,12 @@ class Server:
 
     # constructor
     def __init__(self):
-        self.message = 'NO_MESSAGE_RECEIVED'
-        self.client = 0
+        self.client = None
         self.ipv4 = '189.46.2.121'
 
     # accept or deny client request to connect
     def connect(self, client):
-        if self.client == 0:
+        if self.client is None:
             self.client = client
             return True
         return False
@@ -68,3 +67,10 @@ class Server:
     # receive data from client and proceed operation
     def receive(self, data):
         data = ll.unpack_packet(data[0], data[1], data[2])
+        message = data[0]
+        try:
+            message = data[0].decode()
+        except UnicodeDecodeError:
+            print(f'>> {time()} Server received an invalid UTF-8 message!')
+
+        print(f'>> {time()} Server received message: {message}')

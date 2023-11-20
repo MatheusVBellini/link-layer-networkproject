@@ -64,6 +64,8 @@ def frame(packet, algorithm='flagbytes'):
 def unframe(packet, algorithm='flagbytes'):
     if algorithm == 'flagbytes':
         return undo_flagbytes(packet)
+    else:
+        raise ValueError("invalid algorithm argument for unframe")
 
 
 # sets a flag at the start and at the end of the packet to define its borders
@@ -74,5 +76,4 @@ def flagbytes(packet):
 
 # undo flagbytes frame
 def undo_flagbytes(packet):
-    flag = b'\x7e'
-    return (packet.split(flag))[1]
+    return packet[6:-1]
