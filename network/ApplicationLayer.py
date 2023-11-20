@@ -9,37 +9,47 @@ import network.PhysicalLayer as pl
 class Client:
 
     # constructor
-    def __init__(self):
+    def __init__(self, ipv4):
         self.message = ''
         self.server = None
-        self.ipv4 = '192.168.0.1'
+        self.ipv4 = ipv4
+        print(f'>> {time()} Client {cstr(self.ipv4, "green")} initialized')
 
     # set a message to be sent
     def set_message(self):
-        print(f'>>\n>> {cstr("APPLICATION LAYER", "cyan")}')
-        print(f'>> {time()} Client initialized')
-        self.message = input('>> Type your message here: ')
+        self.message = input('>>\n>> Type your message here: ')
         print('>>')
 
     # Attempt to connect to server
     def connect(self, server):
         if self.server is not None:
-            print(f'>> {time()} Client already connected to this or another server')
+            print(f'>> {time()} Client {cstr(self.ipv4, "green")} already ' +
+                  'connected to this or another server')
+
             print(f'>> {time()} Connection could not be completed\n>>')
             return False
         if server.connect(self):
             self.server = server
-            print(f'>> {time()} Client connected to server\n>>')
+            print(f'>> {time()} Client {cstr(self.ipv4, "green")}' +
+                  ' connected to server\n>>')
+
             return True
-        print(f'>> {time()} Server is busy')
-        print(f'>> {time()} Connection could not be completed\n>>')
+        print(f'>> {time()} Connection to {cstr(self.ipv4, "green")} could ' +
+              'not be completed:')
+
+        print(f'>> {time()} Server {cstr(server.ipv4, "green")} is busy\n>>')
         return False
 
     # send message to server
     def send(self):
         if self.server is None:
-            print(f'>> {time()} Client is not connected to a server')
+            print(f'>> {time()} Client {cstr(self.ipv4, "green")} is not ' +
+                  'connected to a server')
+
             return
+
+        print(f'>> {time()} Client {cstr(self.ipv4, "green")} started ' +
+              'sending the message')
 
         data = (self.message, self, self.server)
         data = tl.tcp_send(data[0], data[1], data[2])
@@ -53,11 +63,14 @@ class Client:
 class Server:
 
     # constructor
-    def __init__(self):
+    def __init__(self, ipv4):
         self.client = None
-        self.ipv4 = '189.46.2.121'
+        self.ipv4 = ipv4
+        print(f'>> {cstr("APPLICATION LAYER", "cyan")}\n>>')
+        print(f'>> {time()} Server {cstr(self.ipv4, "green")} initialized')
 
     # accept or deny client request to connect
+
     def connect(self, client):
         if self.client is None:
             self.client = client
@@ -71,6 +84,8 @@ class Server:
         try:
             message = data[0].decode()
         except UnicodeDecodeError:
-            print(f'>> {time()} Server received an invalid UTF-8 message!')
+            print(f'>> {time()} Server {cstr(self.ipv4, "green")} received' +
+                  ' an invalid UTF-8 message!')
 
-        print(f'>> {time()} Server received message: {message}')
+        print(f'>> {time()} Server {cstr(self.ipv4, "green")} received ' +
+              f'message: {message}')

@@ -2,9 +2,9 @@ from network.ApplicationLayer import Client, Server
 
 
 def main():
-    client = Client()
-    server = Server()
-    blocked_client = Client()
+    server = Server('189.46.2.121')
+    client = Client('192.168.0.1')
+    blocked_client = Client('10.0.0.1')
 
     # setting the environment
     client.set_message()  # set a message to be sent
