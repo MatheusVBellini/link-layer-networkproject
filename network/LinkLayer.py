@@ -48,12 +48,12 @@ def unpack_packet(packet, source, destination):
     if received_crc == calculated_crc:
         print(f'>> {time()} CRC {cstr("OK", "green")}')
     else:
-        print(f'>> {time()} CRC {cstr("FAILED", "red")}:')
+        print(f'>> {time()} CRC {cstr("FAILED", "red")}')
 
     if received_parity == calculated_parity:
         print(f'>> {time()} Odd Parity Bit {cstr("OK", "green")}')
     else:
-        print(f'>> {time()} Odd Parity Bit {cstr("FAILED", "red")}:')
+        print(f'>> {time()} Odd Parity Bit {cstr("FAILED", "red")}')
 
     return unframed_packet, source, destination
 
@@ -90,10 +90,15 @@ def unframe(packet, algorithm='flagbytes'):
 
 # sets a flag at the start and at the end of the packet to define its borders
 def flagbytes(packet):
-    flag = b'\x7e'
+    flag = b'~'
     return flag + packet + flag
 
 
 # undo flagbytes frame
 def undo_flagbytes(packet):
+    if packet[-1] != ord('~') or packet[0] != ord('~'):
+        print(f'>> {time()} flagbyte padding {cstr("FAILED", "red")}')
+    else:
+        print(f'>> {time()} flagbyte padding {cstr("OK", "green")}')
+
     return packet[6:-1]
