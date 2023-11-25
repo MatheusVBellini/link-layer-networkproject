@@ -26,4 +26,4 @@ def transport_byte(pos, value_in):
             value_out |= (value_in ^ 0b11111111) & (1 << i)
             print(f'>> {time()} flipped bit {i} of byte {pos}')
 
-    return int.to_bytes(value_out)
+    return value_out.to_bytes(length=1, byteorder='big', signed=False)
