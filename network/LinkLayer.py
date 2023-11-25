@@ -26,7 +26,7 @@ def frame_packet(packet, source, destination):
 
     framed_packet = frame(bin_crc + bin_parity + bin_packet)
 
-    print(f'>> {time()} Framed packet: {cstr(bytes_to_bits(framed_packet), "green")}')
+    print(f'>> {time()}   Framed packet: {cstr(bytes_to_bits(framed_packet), "green")}')
 
     pl.transport_packet(framed_packet, source, destination)
 
@@ -35,8 +35,9 @@ def frame_packet(packet, source, destination):
 def unpack_packet(packet, source, destination):
     print(f'>>\n>> {cstr("LINK LAYER - SERVER", "cyan")}')
 
+    print(f'>> {time()} Returned packet: {cstr(bytes_to_bits(packet), "green")}')
+
     unframed_packet = unframe(packet)
-    print(f'>> {time()} Unframed packet: {cstr(bytes_to_bits(packet), "green")}')
 
     # error detection
     print(f'>> {time()} Detecting errors:')
