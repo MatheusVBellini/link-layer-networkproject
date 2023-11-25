@@ -1,6 +1,7 @@
 from collections import namedtuple
 from binascii import crc32
 from . import time, cstr
+import network.PhysicalLayer as pl
 
 # framed packet structure
 framedPacket = namedtuple('framedPacket', ['content'])
@@ -27,7 +28,7 @@ def frame_packet(packet, source, destination):
 
     print(f'>> {time()} Framed packet: {cstr(bytes_to_bits(framed_packet), "green")}')
 
-    return framed_packet, source, destination
+    pl.transport_packet(framed_packet, source, destination)
 
 
 # process received framed data (unframing and error detection)
@@ -55,7 +56,7 @@ def unpack_packet(packet, source, destination):
     else:
         print(f'>> {time()} Odd Parity Bit {cstr("FAILED", "red")}')
 
-    return unframed_packet, source, destination
+    destination.receive(unframed_packet)
 
 
 # transform a string into a stream of bits

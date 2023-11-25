@@ -1,9 +1,5 @@
 from . import time, cstr
 import network.TransportLayer as tl
-import network.NetworkLayer as nl
-import network.LinkLayer as ll
-import network.PhysicalLayer as pl
-
 
 # mock client for proof of concept
 class Client:
@@ -52,11 +48,7 @@ class Client:
               'sending the message')
 
         data = (self.message, self, self.server)
-        data = tl.tcp_send(data[0], data[1], data[2])
-        data = nl.route_packet(data[0], data[1], data[2])
-        data = ll.frame_packet(data[0], data[1], data[2])
-        data = pl.transport_packet(data[0], data[1], data[2])
-        self.server.receive(data)
+        tl.tcp_send(data[0], data[1], data[2])
 
 
 # mock server for proof of concept
@@ -79,10 +71,11 @@ class Server:
 
     # receive data from client and proceed operation
     def receive(self, data):
-        data = ll.unpack_packet(data[0], data[1], data[2])
-        message = data[0]
+        print(f'>>\n>> {cstr("APPLICATION LAYER - SERVER", "cyan")}')
+
+        message = data
         try:
-            message = data[0].decode()
+            message = data.decode()
         except UnicodeDecodeError:
             print(f'>> {time()} Server {cstr(self.ipv4, "green")} received' +
                   ' an invalid UTF-8 message!')

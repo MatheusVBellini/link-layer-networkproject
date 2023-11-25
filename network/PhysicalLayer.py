@@ -1,6 +1,6 @@
 from . import time, cstr
 import random as r
-
+import network.LinkLayer as ll
 
 # moves the data physically, generating statistical noise and errors in the data
 def transport_packet(packet, source, destination):
@@ -12,7 +12,7 @@ def transport_packet(packet, source, destination):
         byte_out = transport_byte(i, byte_in)
         packet_out += byte_out
 
-    return packet_out, source, destination
+    ll.unpack_packet(packet_out, source, destination)
 
 def transport_byte(pos, value_in):
     value_out = 0
